@@ -1,0 +1,9 @@
+﻿<div>
+    <div class="sc-first-row"><label class="control-label">{{model.value.index.caption}}<small ng-bind-html-unsafe="model.value.index.description"></small></label>
+        <select ng-model="model.value.index.selectedValue" ng-options="c.value as c.name for c in model.value.index.values"></select>
+    </div>
+    <div class="sc-row">
+        <label class="control-label">{{model.value.follow.caption}}<small ng-bind-html-unsafe="model.value.follow.description"></small></label>
+        <select ng-model="model.value.follow.selectedValue" ng-options="c.value as c.name for c in model.value.follow.values"></select>
+    </div>
+ </div>

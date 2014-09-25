@@ -1,0 +1,58 @@
+﻿{
+  "propertyEditors": [
+    {
+      "name": "Table Editor",
+      "alias": "Imulus.TableEditor",
+      "editor": {
+        "valueType": "JSON",
+        "view": "~/App_Plugins/TableEditor/views/table.editor.html"
+      },
+      "prevalues": {
+        "fields": [
+          {
+            "description": "Blank is unlimited.",
+            "key": "maxColumns",
+            "label": "Max Columns",
+            "view": "number"
+          },
+		  {
+            "description": "Blank is unlimited.",
+            "key": "maxRows",
+            "label": "Max Rows",
+            "view": "number"
+          },
+		  {
+            "description": "CSV per line (i.e. Style Name,class-name)",
+            "key": "tableStyles",
+            "label": "Table Styles",
+            "view": "textarea"
+          },
+		  {
+            "description": "CSV per line (i.e. Style Name,class-name)",
+            "key": "rowStyles",
+            "label": "Row Styles",
+            "view": "textarea"
+          },
+		  {
+            "description": "CSV per line (i.e. Style Name,class-name)",
+            "key": "columnStyles",
+            "label": "Column Styles",
+            "view": "textarea"
+          },
+		  {
+            "description": "Use textarea instead of inputs.",
+            "key": "multiLineInputs",
+            "label": "Use Multi-line Inputs?",
+            "view": "boolean"
+          }
+        ]
+      }
+    }
+  ],
+  "css": [
+    "~/App_Plugins/TableEditor/css/table.editor.css"
+  ],
+  "javascript": [
+    "~/App_Plugins/TableEditor/js/table.editor.js"
+  ]
+}

@@ -1,0 +1,75 @@
+﻿.hidden {
+    display: none;
+}
+div.centerDiv {
+    text-align: center;
+}
+/*buttons*/
+.queryParameterOptions {
+    float: right;
+    margin-left: 5px;
+    width:16px;
+    height:16px;
+}
+
+/*Overview*/
+
+.bulkActionControl {
+    
+    float: left;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    margin-left: 5px;
+}
+
+.bulkActionDropdown {
+    margin-right: 5px;
+    min-width: 130px;
+}
+
+.bulkmanagerOverviewTable {
+    margin-top: 15px;
+    clear: both;
+    width: 100%;
+}
+
+.btn {
+    margin-top: 5px;
+}
+
+.bulkmanagerOverviewTable th {
+    min-width: 10px;
+    height: 30px;
+    padding: 2px 5px;
+    border: 1px solid #d4d4d8;
+}
+
+.bulkmanagerOverviewTable td {
+    border: 1px solid #d4d4d8;
+}
+
+.bulkmanagerOverviewTable th a {
+    color: #000000;
+    text-decoration: none;
+    padding-right: 15px;
+}
+
+.bulkmanagerOverviewTable th.headerRow {
+ min-width: 25%;
+ width: 25%;
+}
+.bulkmanagerOverviewTable td.bulkSelectItem {
+    text-align: center;
+}
+.bulkManagerSelector {
+    text-align: center;
+    width: 22px;
+}
+
+.bulkmanagerCriteriaButtons {
+    float: right;
+}
+
+.bulkmanagerCriteriaButton {
+    margin-left: 5px;
+}

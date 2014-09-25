@@ -1,0 +1,37 @@
+<div ng-controller="YouTube.prevalue.minmax.controller">
+	
+	<label>Enable Min Items?</label>
+	<input type="checkbox" ng-model="model.value.enableMin" ng-change="clearMinValue()"/>
+
+	<div ng-show="model.value.enableMin">
+		<hr/>
+		<input name="min" type="number" ng-model="model.value.minValue" ng-required="model.value.enableMin" min="{{model.value.enableMin ? 1 : 0}}" />
+	</div>
+
+	<div class="help-inline" val-msg-for="min" val-toggle-msg="required">
+        The minimum number is required
+    </div>
+
+    <div class="help-inline" val-msg-for="min" val-toggle-msg="min">
+        You need to specify a minimum number of 1
+    </div>
+
+	<hr/>
+
+	<label>Enable Max Items?</label>
+	<input type="checkbox" ng-model="model.value.enableMax" ng-change="clearMaxValue()"/>
+
+	<div ng-show="model.value.enableMax">
+		<hr/>
+		<input name="max" type="number" ng-model="model.value.maxValue" ng-required="model.value.enableMax" min="{{ model.value.minValue > 0 ? model.value.minValue : 1 }}" />
+	</div>
+
+	<div class="help-inline" val-msg-for="max" val-toggle-msg="required">
+        The maximum number is required
+    </div>
+
+    <div class="help-inline" val-msg-for="max" val-toggle-msg="min">
+        You need to specify a minimum number of {{ model.value.minValue > 0 ? model.value.minValue : 1 }}
+    </div> 
+
+</div>

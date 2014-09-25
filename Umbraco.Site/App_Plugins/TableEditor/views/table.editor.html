@@ -1,0 +1,64 @@
+﻿<div ng-controller="TableEditorController" class="table-editor">
+    <table>
+        <thead>
+            <tr>
+                <th></th>
+                <th class="column-header" ng-repeat="columnStyle in model.value.columnStylesSelected track by $index" table-editor-column-control>
+                    <div class="column-buttons">
+                        <i class="icon icon-add" ng-show="canAddColumn()" ng-click="addColumn($index)"></i>
+                        <i class="icon icon-remove" ng-show="canRemoveColumn()" ng-click="removeColumn($index)"></i>
+                    </div>
+                    <select ng-model="model.value.columnStylesSelected[$index]" ng-options="style.value as style.label for style in model.config.columnStyles" ng-show="model.config.columnStyles.length > 1"></select>
+                </th>
+            </tr>
+            <tr>
+                <th class="column-index"></th>
+                <th class="column-index" ng-repeat="columnStyle in model.value.columnStylesSelected track by $index" table-editor-column-control>{{$index + 1}}</th>
+            </tr>
+        </thead>
+        <tbody ui-sortable="sortableOptions" ng-model="model.value.cells">
+            <tr ng-repeat="row in model.value.cells" table-editor-row-control>
+                <td>{{$index + 1}}</td>
+                <td ng-repeat="column in row" table-editor-column-control>
+                    <textarea ng-model="column.value" ng-if="model.config.multiLineInputs"></textarea>
+                    <input type="text" ng-model="column.value" ng-if="!model.config.multiLineInputs"/>
+                </td>
+                <td class="row-buttons-td">
+                    <div class="row-buttons">
+                        <i class="icon icon-add" ng-show="canAddRow()" ng-click="addRow($index)"></i>
+                        <i class="icon icon-remove" ng-show="canRemoveRow()" ng-click="removeRow($index)"></i>
+                        <i class="icon icon-navigation handle" ng-show="canSort()"></i>            
+                    </div>
+                </td>
+                <td class="row-style">
+                    <select ng-model="model.value.rowStylesSelected[$index]" ng-options="style.value as style.label for style in model.config.rowStyles"></select>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <label class="show-advanced">
+        <input ng-model="showAdvanced" type="checkbox" />
+        Show advanced?
+    </label>
+
+    <div ng-show="showAdvanced" class="advanced-options">
+
+        <label ng-show="model.config.tableStyles.length > 1">
+            Table style
+            <select ng-model="model.value.tableStyle" ng-options="style.value as style.label for style in model.config.tableStyles"></select>
+        </label>
+
+        <label>
+            <input ng-model="model.value.useFirstRowAsHeader" type="checkbox" />
+            Use first row as header?
+        </label>
+        <label>
+            <input ng-model="model.value.useLastRowAsFooter" type="checkbox" />
+            Use last row as footer?
+        </label>
+        <label>
+            <input type="button" value="Clear Table" ng-click="clearTable()"/>
+        </label>
+    </div>
+</div>

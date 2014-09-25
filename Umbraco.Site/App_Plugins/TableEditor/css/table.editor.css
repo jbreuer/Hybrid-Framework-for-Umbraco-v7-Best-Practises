@@ -1,0 +1,121 @@
+﻿.table-editor {
+    overflow: auto;
+}
+
+.table-editor table {
+    border-collapse: separate;
+}
+
+.table-editor td {
+    text-align: center;
+    width: 102px;
+	border: none;
+	line-height: normal;
+	padding: 0;
+    vertical-align: middle;
+}
+
+.table-editor td textarea {
+    width: 75px;
+    height: 50px;
+}
+
+.table-editor td:first-child {
+    text-align: center;
+    width: 10px;
+}
+
+.table-editor th {
+    width: 102px;
+	border: none;
+	line-height: normal;
+	padding: 0;
+    text-align: center;
+}
+
+.table-editor th:first-child {
+    text-align: center;
+    width: 10px;
+}
+
+.table-editor th select {
+    width: 100px;
+	visibility: hidden;
+}
+
+.table-editor .column-buttons {
+    margin-right: 15px;
+    height: 20px;
+	text-align: center;
+}
+
+.table-editor .row-buttons {
+    width: 50px;
+    display: none;
+}
+
+.table-editor td.row-buttons-td {
+    width: 50px;
+    text-align: center;
+	vertical-align: middle;
+}
+
+.table-editor .row-style {
+    width: 100px;
+    visibility: hidden;
+}
+
+.table-editor .row-style select {
+    width: 100px;
+}
+
+.table-editor .row-highlighted {
+    background-color: #eee;
+}
+
+.table-editor .col-highlighted {
+    background-color: #ddd;
+}
+
+.table-editor label {
+    display: block;
+}
+
+.table-editor input[type=text] {
+    padding: 2px;
+    width: 90px;
+}
+
+.table-editor .advanced-options {
+    padding: 10px;
+    background-color: #eee;
+    border: 1px solid #ccc;
+    width: 400px;
+}
+
+.table-editor .show-advanced {
+    padding: 10px 0;
+}
+
+.table-editor .column-header {
+
+}
+
+.table-editor thead tr:nth-child(1) .column-header {
+    visibility: hidden;
+}
+
+.table-editor th.column-index {
+    height: 10px;
+    padding: 0;
+    margin: 0;
+	text-align: center;
+}
+
+.table-editor tr.row-highlighted td.col-highlighted input {
+    border: 1px solid black;
+}
+
+.table-editor .hide-visibility {
+	visibility: hidden;
+}

@@ -1,0 +1,47 @@
+.YouTubeChannel {
+  /* Styling borrowed/based off Umbraco Core Multi content picker */
+}
+.YouTubeChannel .videos .span4 {
+  padding: 2px;
+}
+.YouTubeChannel .videos a {
+  padding: 3px;
+  border: 1px solid transparent;
+  display: block;
+}
+.YouTubeChannel .videos a:hover {
+  border: 1px solid #aaa;
+}
+.YouTubeChannel .videos a.selected {
+  border: 1px solid #53a93f;
+  position: relative;
+}
+.YouTubeChannel .videos a.selected:before {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  background: #53a93f;
+  height: 25px;
+  width: 25px;
+  line-height: 25px;
+  content: '\e165';
+  font-family: icomoon;
+  color: white;
+  -webkit-font-smoothing: antialiased;
+  font-style: normal;
+  font-weight: normal;
+  padding-left: 10px;
+}
+.YouTubeChannel .videos a.selected + h5 {
+  color: #53a93f;
+}
+.YouTubeChannel .videos img {
+  max-width: 100%;
+}
+.YouTubeChannel li a:hover .hover-hide,
+.YouTubeChannel li a .hover-show {
+  display: none;
+}
+.YouTubeChannel li a:hover .hover-show {
+  display: inline-block;
+}

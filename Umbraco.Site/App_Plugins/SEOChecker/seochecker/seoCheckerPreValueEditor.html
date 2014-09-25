@@ -1,0 +1,22 @@
+﻿<div ng-show="model.value.values.length">
+    <div class="sc-first-row umb-el-wrap">
+        <label class="control-label">{{model.value.titleMapping.caption}}<small ng-bind-html-unsafe="model.value.titleMapping.description"></small></label>
+        <div class="controls controls-row">
+            <select ng-model="model.value.titleMapping.selectedValue" ng-options="c.value as c.name for c in model.value.values"></select></div>
+    </div>
+    <div class="sc-row">
+        <label class="control-label">{{model.value.keywordMapping.caption}}<small ng-bind-html-unsafe="model.value.keywordMapping.description"></small></label>
+        <div class="controls controls-row">
+            <select ng-model="model.value.keywordMapping.selectedValue" ng-options="c.value as c.name for c in model.value.values"></select></div>
+    </div>
+    <div class="sc-row">
+        <label class="control-label">{{model.value.descriptionMapping.caption}}<small ng-bind-html-unsafe="model.value.descriptionMapping.description"></small></label>
+        <div class="controls controls-row">
+            <select ng-model="model.value.descriptionMapping.selectedValue" ng-options="c.value as c.name for c in model.value.values"></select></div>
+    </div>
+    <div class="sc-row">
+        <label class="control-label">{{model.value.useKeywords.caption}}<small ng-bind-html-unsafe="model.value.useKeywords.description"></small></label>
+        <div class="controls controls-row">
+            <input type="checkbox" ng-model="model.value.useKeywords.selectedValue" /></div>
+    </div>
+</div>

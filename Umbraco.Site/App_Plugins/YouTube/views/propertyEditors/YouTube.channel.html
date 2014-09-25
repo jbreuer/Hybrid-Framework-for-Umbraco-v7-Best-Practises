@@ -1,0 +1,71 @@
+<div class="YouTubeChannel" ng-controller="YouTube.channel.controller">
+
+        <!-- Hidden Fields for validation (Needs ng-model for ng-form to pick up these fields) -->
+        <input type="hidden" name="minerror" ng-model="errors" />
+        <input type="hidden" name="maxerror" ng-model="errors" />
+
+
+        <!-- Inline error messages that will show or hide -->
+        <div class="alert alert-error" ng-show="propertyForm.minerror.$error.youtubemin">
+            You need to add at least {{model.config.minmax.minValue-model.value.length}} items
+        </div>
+
+        <div class="alert alert-error" ng-show="propertyForm.maxerror.$error.youtubemax">
+            You can only have {{model.config.minmax.maxValue}} items selected
+        </div>
+
+        <!-- Search -->
+        <div>
+            <input type="text" name="textbox" class="umb-editor umb-textstring textstring" placeholder="Search for a video in this channel" ng-model="searchQuery" />
+            <button class="btn" prevent-default ng-click="getVideos('')"><i class="icon icon-search"></i> Search</button>
+        </div>
+
+        <hr />
+
+        <!-- Loading Message - whilst getting videos -->
+        <div ng-show="!hasVideos">
+            <h2>Loading</h2>
+        </div>
+
+        <!-- Video Results -->
+        <div class="row-fluid videos" ng-show="hasVideos">
+            <input type="hidden" name="selectedVideosError" />
+            <div class="span4" ng-repeat="video in videos.items">
+                <a href="#" prevent-default ng-click="toggleVideo(video)" ng-class="{selected: isInArray(video.id.videoId)}">
+                    <img ng-src="{{video.snippet.thumbnails.medium.url}}" />
+                </a>
+                <h5>{{ video.snippet.title }}</h5>
+            </div>
+        </div>
+
+        <!-- Pagination (Next & Previous only) -->
+        <ul class="pager">
+            <li ng-class="{disabled: videos.prevPageToken == null}" class="previous">
+                <a href="#" prevent-default ng-click="getPagedVideos(videos.prevPageToken)">&larr; Previous</a>
+            </li>
+            <li ng-class="{disabled: videos.nextPageToken == null}" class="next">
+                <a href="#" prevent-default ng-click="getPagedVideos(videos.nextPageToken)">Next &rarr;</a>
+            </li>
+        </ul>
+
+        <!-- Saved Videos -->
+        <div>
+            <h4>Selected Videos</h4>
+            <ul class="unstyled list-icons" ui-sortable ng-model="model.value">
+                <li ng-repeat="selectedItem in model.value">
+                    <i class="icon icon-navigation handle"></i>
+                    <a href="#" prevent-default ng-click="removeVideo($index)">
+                        <i class="icon icon-delete red hover-show"></i>
+                        <i class="icon icon-video hover-hide"></i> 
+                        {{selectedItem.title}}
+                    </a>
+                    
+                </li>
+            </ul>
+
+            <div ng-if="model.config.debug === '1'">
+                {{ model.value | json }}
+            </div>
+        </div>    
+
+</div>

@@ -1,0 +1,42 @@
+<div ng-controller="UrlPickerController" class="url-picker">
+
+	<div class="link-meta">
+		<div class="row control-group" ng-hide="model.config.hideTitle">
+			<label for="urlPickerTitle">Title</label> <input id="urlPickerTitle" type="text" ng-model="model.value.meta.title" />
+		</div>
+		<div class="row control-group" ng-hide="model.config.hideOpenNew">
+			<label>Open in new window?</label> <input type="checkbox" ng-model="model.value.meta.newWindow" /> 
+		</div>
+	</div>
+
+	<ul class="nav nav-tabs">
+		<li ng-class="{active : model.value.type == 'url'}" ng-hide="model.config.hideUrl">
+			<a ng-click="switchType('url')" href="#" prevent-default>URL</a>
+		</li>
+		<li ng-class="{active : model.value.type == 'content'}" ng-hide="model.config.hideContent">
+			<a ng-click="switchType('content')" href="#" prevent-default>Content</a>
+		</li>
+		<li ng-class="{active: model.value.type == 'media'}" ng-hide="model.config.hideMedia">
+			<a ng-click="switchType('media')" href="#" prevent-default>Media</a>
+		</li>
+	</ul>
+
+	<div class="tab-body">
+		<div ng-show="model.value.type == 'url'">
+			<input type="text" ng-model="model.value.typeData.url"/>
+			<a href class="delete-icon url-delete" ng-click="resetType('url')"><i class="icon icon-delete" ng-show="model.value.typeData.url"></i></a>
+		</div>
+		<div ng-show="model.value.type == 'content'">
+			<a ng-click="openTreePicker('content')" prevent-default>Select…</a>
+			{{contentName}}
+			<a href class="delete-icon" ng-click="resetType('content')" ng-show="model.value.typeData.contentId > 0"><i class="icon icon-delete"></i></a>
+		</div>
+		<div ng-show="model.value.type == 'media'">
+			<a ng-click="openTreePicker('media')" prevent-default>Select…</a>
+			{{mediaName}}
+            <a href class="delete-icon" ng-click="resetType('media')" ng-show="model.value.typeData.mediaId > 0"><i class="icon icon-delete"></i></a>
+		</div>
+	</div>
+
+</div>
+

@@ -1,0 +1,232 @@
+﻿@using Content = Umbraco.Extensions.Models.Generated.Content;
+@inherits Umbraco.Web.Mvc.UmbracoViewPage<MasterModel<Content>>
+@{
+    Layout = "Master.cshtml";
+}
+
+<div class="container">
+
+    @*Responsive image*@
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <h2>Media</h2>
+            @if (Model.Content.Image1 != null)
+            {
+                <img style="max-width: 60%;" src="@(Model.Content.Image1.Cropper.GetResponsiveCropUrl(600, 200))" alt="@Model.Content.Image1.Name" /><br />
+            }
+        </div>
+    </div>
+
+    @*Multiple images*@
+    @if(Model.Content.Images1 != null && Model.Content.Images1.Any())
+    {
+        foreach(var image in Model.Content.Images1)
+        {
+            <img src="@(image.Cropper.GetCropUrl(width: 300, height: 200, quality: 90))" alt="@image.Name"/><br />
+        }
+    }
+
+    @*Files*@
+    <div class="row">
+        <div class="col-sm-12">
+            <h2>Files</h2>
+        </div>
+    </div>
+    <div class="row" id="files">
+        <div class="col-sm-12">
+            @if(Model.Content.File1 != null)
+            {
+                <a href="@Model.Content.File1.Url" target="_blank">@Model.Content.File1.Name<i class="fa fa-file-text-o fa-2x"></i></a><br />
+            }
+
+            @if (Model.Content.Files1 != null && Model.Content.Files1.Any())
+            {
+                foreach (var file in Model.Content.Files1)
+                {
+                    <a href="@file.Url" target="_blank">@file.Name<i class="fa fa-file-text-o fa-2x"></i></a><br />
+                }
+            }
+        </div>
+    </div>
+
+    @*YouTube*@
+    <div class="row">
+        <div class="col-sm-12">
+            <h2>Video</h2>
+        </div>
+    </div>
+    @if(Model.Content.Youtube != null && Model.Content.Youtube.Any())
+    {
+        foreach (var video in Model.Content.Youtube)
+        {   
+            <div class="row video">
+                <div class="col-lg-6 source">
+                    @Html.Raw(video.Player.EmbedHtml)
+                </div>
+                <div class="col-lg-6 video_description">
+                    @video.Id<br/>
+                    @video.Snippet.Title<br/>
+                    @video.Statistics.ViewCount<br/>
+                    @video.Snippet.PublishedAt.Value.ToString("dd-MM-yyy")
+                </div>
+            </div>
+        }
+    }
+
+    @*Google maps*@
+    <h2>Google maps</h2>
+    @if(Model.Content.GoogleMaps != null)
+    {
+        <div data-lat="@Model.Content.GoogleMaps.Lat" data-lng="@Model.Content.GoogleMaps.Lng" data-zoom="@Model.Content.GoogleMaps.Zoom" id="map_canvas"></div>
+    }
+
+    @*Default MNTP*@
+    <div class="row" id="examples">
+        <h2>Examples</h2>
+        @if (Model.Content.Mntp != null && Model.Content.Mntp.Any())
+        {
+            <p>
+                @foreach(var node in Model.Content.Mntp)
+                {
+                    <a href="@node.Url">@node.Name</a><br />
+                }
+            </p>
+        }
+    </div>
+
+    @*News MNTP*@
+    @if(Model.Content.MntpNews != null && Model.Content.MntpNews.Any())
+    {
+        <p>
+            @foreach (var newsItem in Model.Content.MntpNews)
+            {
+                <a href="@newsItem.Url">@newsItem.Title - @newsItem.CurrentDate.ToString("D")</a><br />
+            }
+        </p>
+    }
+
+    @*Content picker*@
+    @if(Model.Content.ContentPicker != null)
+    {
+        <p>
+            <a href="@Model.Content.ContentPicker.Url">@Model.Content.ContentPicker.Name</a><br />
+        </p>
+    }
+
+    @*Enum checkbox list*@
+    @if(Model.Content.EnumCheckboxList != null && Model.Content.EnumCheckboxList.Any())
+    {
+        <p>
+            @foreach(var package in Model.Content.EnumCheckboxList)
+            {
+                <text>@package.GetLabel() - @package.ToString()</text><br />
+            }
+        </p>
+    }
+
+    @*Member picker*@
+    @if(Model.Content.MemberPicker != null && Model.Content.MemberPicker.Any())
+    {
+        <p>
+            @foreach (var member in Model.Content.MemberPicker)
+            {
+                if (member.ProfilePicture != null)
+                {
+                    <img src="@(member.ProfilePicture.Cropper.GetCropUrl(width: 100, height: 100))" />
+                }
+                <span>@member.Name</span><br />
+            }
+        </p>
+    }
+
+    @*Url picker*@
+    @if(Model.Content.UrlPicker != null)
+    {
+        <p>
+            <a href="@Model.Content.UrlPicker.Url" target="@Model.Content.UrlPicker.Meta.Target()">@Model.Content.UrlPicker.Meta.Title</a><br />
+        </p>
+    }
+
+    @*Multi url picker*@
+    @if(Model.Content.MultiUrlPicker != null && Model.Content.MultiUrlPicker.Any())
+    {
+        foreach(var urlPicker in Model.Content.MultiUrlPicker)
+        {
+            <p>
+                <a href="@urlPicker.Url" target="@urlPicker.Meta.Target()">@urlPicker.Meta.Title</a><br />
+            </p>
+        }
+    }
+
+    @*Multiple textbox*@
+    @if(Model.Content.MultipleTextbox != null && Model.Content.MultipleTextbox.Any())
+    {
+        foreach(var text in Model.Content.MultipleTextbox)
+        {
+            <p>@text</p>
+        }
+    }
+
+    @*Table editor*@
+    @if(Model.Content.TableEditor != null && Model.Content.TableEditor.Cells.Any())
+    {
+        <div class="table-editor-wrapper">
+            <table class="@Model.Content.TableEditor.TableStyle">
+                @{       
+                    var rowIndex = 0;
+                    if (Model.Content.TableEditor.UseFirstRowAsHeader)
+                    {
+                        <thead>
+                            @foreach (var column in Model.Content.TableEditor.Cells.FirstOrDefault())
+                            {
+                                <th>@Html.Raw(column.Value)</th>
+                            }
+                        </thead>   
+                        rowIndex++;
+                    }
+
+                    <tbody>
+                        @foreach (var row in Model.Content.TableEditor.Cells)
+                        {
+                            if (Model.Content.TableEditor.UseFirstRowAsHeader && row == Model.Content.TableEditor.Cells.FirstOrDefault())
+                            {
+                                continue;
+                            }
+
+                            if (Model.Content.TableEditor.UseLastRowAsFooter && row == Model.Content.TableEditor.Cells.LastOrDefault() && Model.Content.TableEditor.Cells.Count() > 1)
+                            {
+                                continue;
+                            }
+
+                            <tr class="@Model.Content.TableEditor.RowStylesSelected.ElementAtOrDefault(rowIndex)">
+                                @{
+                                    var columnIndex = 0;
+
+                                    foreach (var column in row)
+                                    {
+                                        <td class="@Model.Content.TableEditor.ColumnStylesSelected.ElementAtOrDefault(columnIndex)">@Html.Raw(column.Value)</td>
+                                        columnIndex++;
+                                    }
+
+                                    rowIndex++;
+                                }
+                            </tr>
+                        }
+                    </tbody>
+
+                    if (Model.Content.TableEditor.UseLastRowAsFooter && Model.Content.TableEditor.Cells.Count() > 1)
+                    {
+                        var columnIndex = 0;
+                        <tfoot>
+                            @foreach (var column in Model.Content.TableEditor.Cells.LastOrDefault())
+                            {
+                                <td class="@Model.Content.TableEditor.ColumnStylesSelected.ElementAtOrDefault(columnIndex)">@Html.Raw(column.Value)</td>
+                                columnIndex++;
+                            }
+                        </tfoot>  
+                    }
+                }
+            </table>
+        </div>
+    }
+</div>

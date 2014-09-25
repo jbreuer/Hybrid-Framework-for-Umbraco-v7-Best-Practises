@@ -1,0 +1,14 @@
+﻿.SEOCheckerToggleAdvancedSettings
+{
+    clear:both;
+    background: url("/umbraco/images/arrowDown.gif") no-repeat scroll 0 0 transparent;
+    cursor: pointer;
+    padding: 0 0 0 18px;
+}
+
+.SEOCheckerAdvancedSettings
+{
+    display:none;
+    margin-bottom:10px;
+}
+

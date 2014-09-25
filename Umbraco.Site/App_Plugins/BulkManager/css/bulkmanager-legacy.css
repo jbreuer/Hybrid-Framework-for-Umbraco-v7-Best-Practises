@@ -1,0 +1,77 @@
+﻿/*Select Dialog*/
+.selectQueryParametersControl .guiInputTextStandard{
+    height: 150px;
+}
+
+.bulkManagerSearchPanel {
+    margin-bottom: 15px;
+}
+
+.overviewHeader {
+    margin-top: 5px;
+ font-size: 18px;   
+ font-weight: 900;
+}
+
+.bulkmanagerOverviewTable {margin-top: 30px;}
+.bulkmanagerOverviewTable th { background-color:#F2F1F8; }
+.bulkmanagerOverviewRowAlt { background-color:#F2F1F8 }
+
+/*modal*/
+
+.bulkManagerDialog h2.propertypaneTitel {
+    margin: 10px;
+}
+
+.bulkDialogTitle {
+    background-color: #F2F1F8;
+    border-bottom: 1px solid #d4d4d8;
+    color: #378080;
+    text-shadow: #FFF 0 1px 0;
+    font-weight: 900;
+    height:15px;
+    padding: 5px;
+}
+
+/*paging*/
+
+.pagingPanel {
+     width: 100%;
+     background-color:#F2F1F8;
+     height: 35px;
+}
+
+.pagingLeft {
+    float: left;
+    margin: 10px 0 0 5px;
+}
+
+.pagingRight {
+    float: right;
+    margin: 10px 5px 0 0;
+}
+
+.pagingListBox {
+    width: 50px;
+    margin: 0 5px 0 5px;
+}
+
+.recordCountListBox {
+    margin-left:10px;
+}
+.pagingBackButton {
+    margin-right: 5px;
+    font-weight: 900;
+}
+
+.pagingNextButton {
+    margin-left: 5px;
+    font-weight: 900;
+}
+.pagingBackButton:disabled, .pagingNextButton:disabled {
+    color: #d4d4d8;
+}
+
+.pagingMaxResultDropdown {
+    margin-left: 40px;
+}

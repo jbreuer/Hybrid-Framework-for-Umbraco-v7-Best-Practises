@@ -1,0 +1,18 @@
+<div ng-controller="YouTube.prevalue.channel.controller">
+	
+	<input type="text" name="username" id="username" ng-model="username" placeholder="uHangout" />
+	<a href="#" ng-click="queryChannel(username)" class="btn" prevent-default>Lookup Channel</a>
+
+	<hr/>
+
+	<div ng-if="model.value" class="row-fluid">
+		<div class="span2">
+			<img ng-src="{{ model.value.thumbnails.default.url }}" />
+		</div>
+		<div class="span10">
+			<h4>{{ model.value.title }}</h4>
+			<small>ID: {{ model.value.channelId }}</small>
+			<p>{{ model.value.description }}</p>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,64 @@
+﻿.seoOverviewTable
+{
+    border:1px solid #d4d4d8;
+}
+
+.seoOverviewTable{
+    margin-top: 10px;
+    width: 100%;
+}
+
+.seoOverviewTable th  
+{	height: 30px;
+	padding:2px 5px; 
+    background: #F2F1F8;
+    border:1px solid #d4d4d8;
+}
+
+.seoOverviewTable th a { color: #000000; text-decoration:none;}
+.seoOverviewTable td {border:1px solid #d4d4d8;}
+
+
+.seoOverviewRow {  }
+
+.seoOverviewRowAlt {background-color:#F2F1F8; }
+
+.pagingPanel {
+     width: 100%;
+     background-color:#F2F1F8;
+     border-left: 1px solid #d4d4d8;
+     border-right: 1px solid #d4d4d8;
+     border-bottom: 1px solid #d4d4d8;
+     height: 35px;
+}
+
+.pagingLeft {
+    float: left;
+    margin: 10px 0 0 5px;
+}
+
+.pagingRight {
+    float: right;
+    margin: 10px 5px 0 0;
+}
+
+.pagingListBox {
+    width: 50px;
+    margin: 0 5px 0 5px;
+}
+
+.recordCountListBox {
+    margin-left:10px;
+}
+.pagingBackButton {
+    margin-right: 5px;
+    font-weight: 900;
+}
+
+.pagingNextButton {
+    margin-left: 5px;
+    font-weight: 900;
+}
+.pagingBackButton:disabled, .pagingNextButton:disabled {
+    color: #d4d4d8;
+}

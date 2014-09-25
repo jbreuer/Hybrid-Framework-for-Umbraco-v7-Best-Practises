@@ -1,0 +1,28 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage<MasterModel<Vacancyoverview>>
+@{
+    Layout = "Master.cshtml";
+}
+
+@*Vacancies*@
+<div class="container">
+    <h2>@Model.Content.Title</h2>
+    <p>@Model.Content.Text</p>
+    <div class="row" id="vacancies">
+        <div class="col-sm-12">
+            <p>
+                <a href="?level=@VacancyLevel.Junior.ToString().ToLower()">@VacancyLevel.Junior<i class="fa fa-child fa-2x"></i></a> - 
+                <a href="?level=@VacancyLevel.Senior.ToString().ToLower()">@VacancyLevel.Senior<i class="fa fa-graduation-cap fa-2x"></i></a> - 
+                <a href="@Model.Content.Url">All<i class="fa fa-users fa-2x"></i></a>
+            </p>
+        </div>
+    </div>
+
+    <div class="vacancy-layer">
+        <div class="vacancy-overview">
+            @Html.Partial("VacancyoverviewContainer", Model.Content.Container)
+        </div>
+    </div>
+</div>
+
+@*Render the widgets.*@
+@Html.Partial("Widgets", Model.Content.Widgets)

@@ -1,0 +1,48 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage<MasterModel<Gallery>>
+@{
+    Layout = "Master.cshtml";
+}
+
+@*Images*@
+@if(Model.Content.Images != null && Model.Content.Images.Any())
+{
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h2>@Model.Content.Name</h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="content-slider" data-thumbs="6">
+                    @foreach(var image in Model.Content.Images)
+                    {
+                        <div class="slide">
+                            <img src="@image.Cropper.GetResponsiveCropUrl(1000, 500)" alt="@image.Name" />
+                        </div>    
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="row m-t-lg m-b-lg">
+            <div class="col-md-1">
+                <div class="content-slider-paging paging-left pull-right m-t-lg"></div>
+            </div>
+            <div class="col-md-10">
+                <div class="content-slider-pager">
+                    @{
+                        var count = 0;
+                        foreach(var image in Model.Content.Images)
+                        {
+                            <a data-slide-index="@count" href="#"><img src="@image.Cropper.GetResponsiveCropUrl(150, 100)" alt="@image.Name" /></a>
+                            count++;
+                        }
+                    }
+                </div>
+            </div>
+            <div class="col-md-1">
+                <div class="content-slider-paging paging-right m-t-lg"></div>
+            </div>
+        </div>
+    </div>
+}

@@ -1,0 +1,10 @@
+This package adds a new section to your Umbraco installation which allows you to view your Google Analytics statistical information directly inside Umbraco, without having to open a new tab or window.
+
+Allowing you to get a quick overview & glance of where your traffic comes from and what devices they use etc...
+
+Analytics Team
+
+The Analytics team consists of:
+Warren Buckley, Tim Geyssens & Anders Bjerner
+ 
+ 

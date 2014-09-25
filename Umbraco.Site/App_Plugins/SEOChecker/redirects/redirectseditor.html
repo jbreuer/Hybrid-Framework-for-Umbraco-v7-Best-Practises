@@ -1,0 +1,66 @@
+﻿<div ng-controller="seoChecker.redirectsController">
+    <div ng-hide="editMode">
+        <h3 ng-bind="model.config.overviewTitle"></h3>
+        <p ng-bind="model.config.overviewIntro"></p>
+        <p ng-hide="redirects" ng-bind="model.config.overviewNoResult"></p>
+        <table class="seoOverviewTable" ng-show="redirects">
+            <thead>
+                <tr>
+                    <td ng-bind="model.config.overviewUrlHeader"></td>
+                    <td ng-bind="model.config.overviewRedirectHeader"></td>
+                    <td ng-bind="model.config.overviewLastReferer"></td>
+                    <td ng-bind="model.config.overviewAccessedHeader"></td>
+                    <td ng-bind="model.config.overviewLastTimeAccessedHeader"></td>
+                    <td>&nbsp;</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="redirect in redirects" ng-class-even="'seoOverviewRowAlt'" ng-class-odd="'seoOverviewRow'">
+                    <td><a href="{{redirect.url}}" target="_blank">{{redirect.url}}</a></td>
+                    <td><a href="{{redirect.niceUrl}}" target="_blank">{{redirect.niceUrl}}</a></td>
+                    <td><a href="{{redirect.lastReferer}}" target="_blank">{{redirect.lastReferer}}</a></td>
+                    <td>{{redirect.timesAccessed}}</td>
+                    <td>{{redirect.lastTimeAccessed}}</td>
+                    <td><div class ="actionColumn"><span class="icon-edit actionButton" ng-click="setEditMode(redirect.notFoundId)">&nbsp;</span> <span class="icon-delete actionButton" ng-click="deleteRedirect(redirect.notFoundId)">&nbsp;</span></div></td>
+                </tr>
+
+            </tbody>
+        </table>
+        <a ng-bind="model.config.overviewCreateButton" class="btn" ng-click="setEditMode(0)"></a>
+    </div>
+    <div ng-show="editMode">
+        <input type="hidden" ng-model="model.value.notFoundId" />
+        <h3 ng-bind="model.config.editTitle"></h3>
+        <p ng-bind="model.config.editIntro"></p>
+        <strong><span class="formError" val-msg-for="urlTextBox" ng-show="validationResult.redirectExists" ng-bind="model.config.editurlExistsError"></span></strong>
+        <div class="sc-row">
+            <label class="sc-label" ng-bind="model.config.editOldUrlField" for="urlTextBox"><small ng-bind-html-unsafe="model.config.editOldUrlFieldDescription" ></small></label>
+            <input type="text" name="urlTextBox" ng-model="model.value.url" class="umb-editor umb-textstring"  val-showerror="validationResult.urlInvalid"/><span class="formError" val-msg-for="urlTextBox" ng-show="validationResult.urlInvalid" ng-bind="model.config.editUrlRequiredError"></span>
+        </div>
+        <div class="sc-row">
+            <label class="sc-label" ng-bind="model.config.editRedirectNodeField"><small ng-bind-html-unsafe="model.config.editRedirectNodeFieldDescription"></small></label>
+            <span>
+                <input name="redirectNodeHidden" type="hidden" ng-model="nodePicked.id">
+                <span ng-bind="nodePicked.name" class="pickedNodeName" style="font-weight:bold;"></span>
+                <a class="clearNodePicker" style="color:red;" ng-show="nodePicked" ng-click="deletePickedNode()" ng-bind="model.config.editnodePickerDelete"></a>
+            </span>
+            <a class="chooseNodePicker" ng-click="pickContentNode()" ng-bind="model.config.editnodePickerChoose" val-showerror="validationResult.redirectInvalid"></a>&nbsp;&nbsp;&nbsp;<span class="formError" val-msg-for="redirectNodeHidden" ng-show="validationResult.redirectInvalid" ng-bind="model.config.editRedirectRequiredError"></span>
+        </div>
+        <div class="sc-row">
+            <label class="sc-label" ng-bind="model.config.editRedirectUrlField" for="redirectUrl"><small ng-bind-html-unsafe="model.config.editRedirectUrlFieldDescription"></small></label>
+            <input type="text" name="redirectUrlTextBox" ng-model="model.value.redirectUrl" class="umb-editor umb-textstring" val-showerror="validationResult.redirectInvalid"/>
+        </div>
+        <div class="sc-row">
+            <label class="sc-label" ng-bind="model.config.editExactDomainMatchField"><small ng-bind-html-unsafe="model.config.editExactDomainMatchFieldDescription"></small></label>
+            <input type="text" ng-model="model.value.domain" class="umb-editor umb-textstring" />
+        </div>
+        <div class="sc-row">
+            <label class="sc-label" ng-bind="model.config.editExactQuerystringMatchField"><small ng-bind-html-unsafe="model.config.editExactQuerystringMatchFielddDescription"></small></label>
+            <input type="text" ng-model="model.value.queryString" class="umb-editor umb-textstring" />
+        </div>
+
+        <div class="sc-row">
+            <a ng-bind="model.config.editSaveButton" class="btn btn-success" ng-click="submitRedirect()"></a> <a ng-bind="model.config.editCancelButton" class="btn" ng-click="cancelEditMode()"></a>
+        </div>
+    </div>
+</div>

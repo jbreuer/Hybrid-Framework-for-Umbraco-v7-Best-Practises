@@ -1,0 +1,193 @@
+﻿.SEOCheckerDropdown
+{
+    width:100px;
+}
+
+.SEOCheckerDropdownSmall
+{
+    width:40px;
+}
+
+.SEOCheckerPageLogo
+{
+    float:left;
+    padding-top:10px;
+}
+
+.SEOCheckerPageTitle
+{
+    width:600px;
+    float:left;
+}
+.SEOCheckerPageIntro
+{
+    clear:both;
+    margin-left:10px;
+}
+
+.seoCheckerMainLegacy {
+      margin: 0;
+    padding: 0;
+}
+
+p.bigFont {
+    font-size: 14px;
+}
+
+#SEOCheckerTrialLicenseFeedback {
+    margin-top:5px;
+}
+
+.seoCheckerError{
+	display:block;
+	line-height:30px;
+	height:30px;
+	margin-top: 15px;
+}
+.inboundLinkpropertyItemheader {
+    float: left;
+    font-weight: bold;
+    word-wrap: break-word;
+    padding-bottom: 10px;
+    padding-right: 1%;
+    width: 30%;
+}
+
+.SEOCheckerOverviewButtons
+{
+    float:right;
+    white-space: nowrap;
+}
+.SEOCheckerOverviewButton
+{
+    width:16px;
+    height: 16px;
+    margin-left:5px;
+}
+
+.SEOCheckerOverviewResolvedIssue {
+    text-decoration:line-through;
+}
+
+.seoimageButton {
+ position: relative;
+    margin-left: 5px;
+    top: 7px;
+}
+
+.seoimageButtonRightSpacing {
+ position: relative;
+    margin-left: 5px;
+    margin-right: 10px;
+    top: 7px;
+}
+
+.seoMenuButton {
+    width:14px;
+    height:14px;
+}
+.bulkActionControl {
+    margin-top: 2px;
+    float: right;
+}
+
+.bulkActionText {
+    position: relative;
+    top: 5px;
+    margin-right:5px;
+}
+
+.bulkItemSelectChecboxContainer {
+    float: left;
+    margin-right:5px;
+}
+
+.bulkActionbutton {
+    position: relative;
+    top: 7px;
+}
+
+div.alert a{
+    text-decoration: underline;
+}
+
+#body_UmbracoPanel_menu_sl {
+    min-width:400px;
+}
+
+.fieldError {
+    color: red;
+    font-weight: bold;
+    padding-left: 5px;
+}
+
+.seoCheckerPagedItem {
+ list-style-type: none;
+    text-indent: 0;
+    margin: 0;
+}
+
+.seoCheckerPagingCurrent {
+    color: black;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.hidden {
+    display: none;
+}
+
+.error ul {
+    list-style-type: none;
+    text-indent: 0;
+}
+ul.errorList {
+    list-style-type: disc;
+}
+
+/*Search*/
+.searchTextBox {
+    width: 200px;
+}
+
+.searchButton {
+    margin-left: 10px;
+}
+
+/*Overview*/
+
+
+.seoOverviewItemCell
+{
+	vertical-align: top;
+    padding: 5px;
+    margin: 0px;
+}
+
+.seoCheckerOverviewFooterButton {
+    margin-top: 10px;
+}
+
+.seoOverviewBulkSelector {
+    width: 25px;
+}
+
+
+
+.seoOverviewTableactions {
+    width: 25px;
+}
+
+
+div.fileUploadPickerSelected {
+    margin-top: 5px;
+}
+.seoOverviewBigColumn {
+   width:28%; 
+}
+
+.seoOverviewMediumColumn {
+   width:8%; 
+}
+
+/*Paging*/

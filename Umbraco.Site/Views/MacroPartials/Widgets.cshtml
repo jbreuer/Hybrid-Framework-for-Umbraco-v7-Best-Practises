@@ -1,0 +1,7 @@
+@inherits Umbraco.Web.Macros.PartialViewMacroPage
+@{
+    var key = new List<object>() { Model.MacroParameters["key"] };
+    var content = Umbraco.TypedContent(key);
+    
+    @Html.Partial("Widgets", content)
+}

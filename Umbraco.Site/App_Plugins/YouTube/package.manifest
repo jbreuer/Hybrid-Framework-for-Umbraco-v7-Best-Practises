@@ -1,0 +1,47 @@
+{
+  "propertyEditors": [
+    {
+      "name": "YouTube Picker for Channel",
+      "alias": "YouTube.Channel",
+      "editor": {
+        "valueType": "JSON",
+        "view": "~/App_Plugins/YouTube/views/propertyEditors/YouTube.channel.html"
+      },
+      "prevalues": {
+        "fields": [
+          {
+            "description": "Enter the Channel to display videos only for that channel",
+            "key": "channel",
+            "label": "Channel ",
+            "view": "~/App_Plugins/YouTube/views/prevalues/YouTube.channelinfo.html"
+          },
+          {
+            "description": "Select the sort order for display videos",
+            "key": "orderBy",
+            "label": "Order By",
+            "view": "~/App_Plugins/YouTube/views/prevalues/YouTube.orderby.html"
+          },
+          {
+            "description": "An optional min & max number of items to be selected",
+            "key": "minmax",
+            "label": "Min & Max Items (Optional)",
+            "view": "~/App_Plugins/YouTube/views/prevalues/YouTube.MinMax.html"
+          },          
+          {
+            "description": "To help debug any issues this will display info in the JS console",
+            "key": "debug",
+            "label": "Enable Debug",
+            "view": "boolean"
+          }
+        ]
+      }
+    }
+  ],
+  "css": [
+    "~/App_Plugins/YouTube/css/YouTube.css"
+  ],
+  "javascript": [
+    "~/App_Plugins/YouTube/js/YouTube.js"
+  ]
+}
+

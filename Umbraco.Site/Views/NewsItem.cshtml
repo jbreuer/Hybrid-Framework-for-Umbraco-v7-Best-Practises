@@ -1,0 +1,17 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage<MasterModel<Newsitem>>
+@{
+    Layout = "Master.cshtml";
+}
+
+<h1>@Model.Content.Title</h1>
+<p>@Model.Content.CurrentDate.ToString("F")</p>
+<p>@Model.Content.BodyText</p>
+@if(Model.Content.Image != null)
+{
+    <img src="@(Model.Content.Image.Cropper.Src)" alt="@Model.Content.Image.Name" width="300" /><br />
+}
+
+@if (Model.Content.Attachment != null)
+{
+    <a href="@Model.Content.Attachment.Url" target="_blank">Attachment</a>
+}

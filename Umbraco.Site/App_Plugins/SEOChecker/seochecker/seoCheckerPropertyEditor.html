@@ -1,0 +1,42 @@
+﻿<div ng-controller="seoChecker.seoCheckerPropertyEditorController" class="seoCheckerPropertyEditor">
+    <div class="alert alert-block"  ng-show="model.value.config.isTrial"><span class="alertMessage" ng-bind-html-unsafe="model.value.config.seoTrialCaption"></span></div>
+    <div class="sc-row">
+        <label class="control-label">{{model.value.config.snippetPreviewCaption.caption}}</label>
+        <div class="snippetContainer">
+            <a class="snippetTitle" href="{{model.value.snippetUrl}}" ng-bind-html-unsafe="formatTitle()"></a><br/>
+            <a target="_blank" href="{{model.value.snippetUrl}}" class="snippetUrl" ng-bind-html-unsafe="formatSnippetUrl()"></a>
+            <br><span class="snippetDescription" ng-bind-html-unsafe="formatDescription()"></span>
+        </div>
+    </div>
+    <div class="sc-row">
+        <label class="control-label">{{model.value.config.focusKeywordCaption.caption}}<small ng-bind-html-unsafe="model.value.config.focusKeywordCaption.description"></small></label>
+        <div class="sc-control"><input type="text" class="umb-editor umb-textstring" ng-model="model.value.focusKeyword" /><a ng-click="openKeywordSelectionTool()" class="keywordSelectionButton"><i class="icon-info"></i></a></div>
+    </div>
+    <div class="sc-row" ng-show="model.config.showTitle">
+        <label class="control-label">{{model.value.config.seoTitleCaption.caption}}<small ng-bind-html-unsafe="model.value.config.seoTitleCaption.description"></small></label>
+        <div class="sc-control"><input type="text" class="umb-editor umb-textstring" ng-model="model.value.seoTitle" ng-change="validateTitleLength()" />
+        <div class="sc-caption" ng-show="titleLengthVisible()">
+            <div class="seoCharacterValidation"><small><span ng-bind="seoTitleLength" ng-class="seoTitleLengthClass"></span> {{model.config.titleCharCountSuffix}}</small></div>
+        </div></div>
+    </div>
+    <div class="sc-row" ng-show="model.config.showKeywords">
+        <label class="control-label">{{model.value.config.seoKeywordsCaption.caption}}<small ng-bind-html-unsafe="model.value.config.seoKeywordsCaption.description"></small></label>
+       <div class="sc-control"> <input type="text" class="umb-editor umb-textstring" ng-model="model.value.seoKeywords" /></div>
+    </div>
+    <div class="sc-row" ng-show="model.config.showDescription">
+        <label class="control-label">{{model.value.config.seoDescriptionCaption.caption}}<small ng-bind-html-unsafe="model.value.config.seoDescriptionCaption.description"></small></label>
+       <div class="sc-control"> <textarea class="umb-editor umb-textarea" rows="10" ng-model="model.value.seoDescription" ng-change="validateDescriptionLength()" />
+        <div class="sc-caption" ng-show="descriptionLengthVisible()">
+            <div class="seoCharacterValidation"><small><span ng-bind="seoDescriptionLength" ng-class="seoDescriptionLengthClass"></span> {{model.config.descriptionCharCountSuffix}}</small></div>
+        </div></div>
+    </div>
+    <div class="sc-row" ng-hide="model.value.isNew">
+        <label class="control-label sc-label">Validation result</label>
+        <div ng-hide="validationResult" class="seoLoader"></div>
+        <div ng-show="validationResult">
+            <ul class="keywordValidation">
+                <li ng-repeat="item in validationResult" class="{{item.css}}" ng-bind-html-unsafe="item.message"></li>
+            </ul>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,192 @@
+﻿.sc-row {
+    border-top: 1px solid #F8F8F8;
+    margin-top: 15px;
+    padding-top: 20px; 
+    margin-left: 0;
+    padding-left: 0;
+    clear:both;
+}
+.sc-row .control-label {
+    margin-left: 0;
+    padding-left: 0;
+}
+.sc-label {
+    padding-left: 0 ;
+    margin-left: 0;
+    left:0;
+    min-width: 160px;
+}
+
+.sc-control {
+     margin-left: 240px;
+    width:83.5%;
+
+}
+
+.sc-caption {
+    width: 52.5%;
+    margin-left: 180px;
+    margin-top: 5px;
+}
+
+.keywordSelectionButton {
+    margin-left: 5px;
+    text-decoration: none !important;
+    cursor: pointer;
+}
+
+.seoLoader {
+    min-width: 100px;
+    min-height: 100px;
+    background: center center url(/umbraco/assets/img/loader.gif) no-repeat;
+}
+
+.seoCharacterValidation {
+    float:right;
+    width: 60.6%;
+    text-align: right;
+
+}
+
+.actionButton {
+    cursor: pointer;
+    margin-right: 5px;
+}
+
+ul.keywordValidation {
+    padding: 0px;
+    margin:  0px 0px 0px 10px;
+    word-wrap: break-word;
+     list-style-type: none;
+    text-indent: 0;
+    margin-left: 240px;
+    width:56.5%;
+}
+
+li.keywordValidationError {
+        background: none repeat scroll  0 0 #FBE3E4;
+        border: 1px solid #FBC2C4;
+        color: #8A1F11;
+        padding: 5px;
+        margin-bottom: 10px;
+        text-align: left;
+        
+    }
+
+li.keywordValidationOk {
+        background: none repeat scroll  0 0 #E6EFC2;
+        border: 1px solid #C6D880;
+        color: #264409;
+        padding: 5px;
+        margin-bottom: 10px;
+        text-align: left;
+    }
+
+span.valid {
+    color: #53AA4A;
+    font-weight:900;
+}
+span.error {
+    color: #9D261D;
+    font-weight: 700;
+}
+
+/*Redirect*/
+
+span.formError {
+    margin-left: 5px;
+    line-height: 30px;
+    color: #9D261D;
+}
+
+.seoOverviewTable
+{
+    margin-top: 10px;
+    margin-bottom: 10px;
+    width: 100%;
+    border:1px solid #d4d4d8;
+}
+
+.seoOverviewTable thead  
+{	min-width: 10px;
+    height: 50px;
+	padding:2px 5px; 
+    font-weight: 900;
+    background: #EEEEEE;
+}
+
+.seoOverviewTable td
+{
+	vertical-align: top;
+    padding: 5px;
+    margin: 0px;
+    border:1px solid #d4d4d8;
+}
+div.actionColumn  {
+    float: right;
+    border: 0;
+}
+
+.seoOverviewTable td a {  color: #1122CC;text-decoration: underline;}
+
+
+.seoOverviewRow {  }
+
+.seoOverviewRowAlt { background-color:#EEEEEE }
+
+.pickedNodeName {
+    font-weight: 900;
+    border-bottom: 1px dotted #333333;
+}
+
+.clearNodePicker {
+    font-weight: 900;
+    cursor: pointer;
+    margin-left: 5px;
+}
+
+.chooseNodePicker {
+    margin-left: 5px;
+    cursor: pointer;
+}
+
+/*Snippet*/
+.snippetContainer {
+    display: block;
+    margin-left: 240px;
+    font-family: arial,sans-serif;
+    font-size: 13px;
+    max-width: 530px;
+    min-height: 60px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.snippetTitle ,.snippetTitle:hover {
+    font-size: 16px;
+    color: #1122CC;
+    text-decoration: underline;
+}
+
+.snippetUrl, .snippetUrl:hover {
+    color: #282;
+    text-decoration: none;
+    font-weight: 400;
+}
+
+span.snippetDate {
+    color: #444444;
+    font-weight: 400;
+}
+
+span.snippetDescription {
+    font-family: arial,sans-serif;
+    color: #444444;
+    display: block;
+    max-width: 513px;
+}
+
+.alertMessage a {
+    font-weight: 900;
+    text-decoration:underline; 
+}

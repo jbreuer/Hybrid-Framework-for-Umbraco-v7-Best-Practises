@@ -1,0 +1,38 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage<MasterModel<Home>>
+@{
+    Layout = "Master.cshtml";
+}
+
+@*Slider*@
+@if(Model.Content.Slider != null && Model.Content.Slider.Any())
+{
+    <div class="container-fluid wrapper">
+        <h2>Welcome</h2>
+        <div class="bxslider">
+            @foreach(var slide in Model.Content.Slider)
+            {
+                <div>
+                    <h1>@slide.Title</h1>
+                    @slide.Text
+                    <img src="@slide.Image.Cropper.GetResponsiveCropUrl(400, 200)" />
+                </div>   
+            }
+        </div>
+    </div>
+}
+
+@*Latest news*@
+@if(Model.Content.LatestNewsItem != null)
+{
+    <div class="container-fluid" id="latest_news">
+        <div class="container">
+            <h2>Latest news</h2>
+            <p>
+                <a href="@Model.Content.LatestNewsItem.Url">
+                    @Model.Content.LatestNewsItem.Title<br />
+                    @Model.Content.LatestNewsItem.CurrentDate.ToString("D")<br />
+                </a>
+            </p>
+        </div>
+    </div>
+}

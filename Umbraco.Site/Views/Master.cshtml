@@ -1,0 +1,59 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage<IMasterModel>
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>@Model.SeoTitle</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="@Model.SeoDescription">
+
+    @*If this is bundled and minified the fonts don't work.*@
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+
+    @*Add bootstrapcss as a token from the web.config. This is an external source.*@
+    @*Add main.css because the /css folder is scanned for that name.*@
+    @CruncherBundler.RenderCSS("bootstrapcss", "main.css", "jquery.bxslider.css")
+
+    @*Add jquery, googlemaps and bootstrapjs as a token from the web.config. These are external sources.*@
+    @*Add slimmage.js because the /js folder is scanned for that name.*@
+    @CruncherBundler.RenderJavaScript("jquery", "jqueryvalidate", "googlemaps", "bootstrapjs", "slimmage.js", "functions.js", "jquery.bxslider.js", "jquery.address-1.6.js")
+</head>
+<body>
+    <div id="wrapper">
+
+        @*Menu*@
+        <nav id="sidebar-wrapper">
+            <a href="#"><i class="fa fa-chevron-left"></i></a>
+            <a href="#"><i class="fa fa-bars"></i></a>
+            <ul>
+                @foreach (var m in Model.MenuItems)
+                {
+                    <li class="@m.ActiveClass"><a href="@m.Url">@m.Title</a></li>
+                }
+            </ul>
+        </nav>
+
+        <div id="page-content-wrapper">
+            <div class="container-fluid">
+                @RenderBody()
+            </div>
+
+            @*Footer*@
+            <footer class="container-fluid">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-4 col-md-3 col-lg-2">
+                            <h2>Get Social</h2>
+                            <a href="@Model.Twitter" target="_blank">Twitter<i class="fa fa-twitter fa-2x"></i></a>
+                            <a href="@Model.Facebook" target="_blank">Facebook<i class="fa fa-facebook fa-2x"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
+</body>
+</html>

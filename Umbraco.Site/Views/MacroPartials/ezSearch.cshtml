@@ -1,0 +1,435 @@
+@using System.Globalization
+@using System.Text
+@using System.Text.RegularExpressions
+@using Examine
+@using Umbraco.Core.Logging
+@using Umbraco.Web.Models
+@inherits Umbraco.Web.Macros.PartialViewMacroPage
+@{
+    int parsedInt;
+
+    // Parse querystring / macro parameter
+    var model = new SearchViewModel
+    {
+        SearchTerm = CleanseSearchTerm(("" + Request["q"]).ToLower(CultureInfo.InvariantCulture)),
+        CurrentPage = int.TryParse(Request["p"], out parsedInt) ? parsedInt : 1,
+
+        PageSize = GetMacroParam(Model, "pageSize", s => int.Parse(s), 10),
+        RootContentNodeId = GetMacroParam(Model, "rootContentNodeId", s => int.Parse(s), -1),
+        RootMediaNodeId = GetMacroParam(Model, "rootMediaNodeId", s => int.Parse(s), -1),
+        IndexType = GetMacroParam(Model, "indexType", s => s.ToLower(CultureInfo.InvariantCulture), ""),
+        SearchFields = GetMacroParam(Model, "searchFields", s => SplitToList(s), new List<string> { "nodeName", "metaTitle", "metaDescription", "metaKeywords", "bodyText" }),
+        PreviewFields = GetMacroParam(Model, "previewFields", s => SplitToList(s), new List<string> { "bodyText" }),
+        PreviewLength = GetMacroParam(Model, "previewLength", s => int.Parse(s), 250),
+        HideFromSearchField = GetMacroParam(Model, "hideFromSearchField", "umbracoNaviHide"),
+        SearchFormLocation = GetMacroParam(Model, "searchFormLocation", s => s.ToLower(), "bottom")
+    };
+
+    // Validate values
+    if (model.IndexType != UmbracoExamine.IndexTypes.Content &&
+        model.IndexType != UmbracoExamine.IndexTypes.Media)
+    {
+        model.IndexType = "";
+    }
+
+    if (model.SearchFormLocation != "top"
+        && model.SearchFormLocation != "bottom"
+        && model.SearchFormLocation != "both"
+        && model.SearchFormLocation != "none")
+    {
+        model.SearchFormLocation = "bottom";
+    }
+
+    // ====================================================
+    // Comment the next if statement out if you want a root
+    // node id of -1 to search content across all sites
+    // and not just the current site.
+    // ====================================================
+    if (model.RootContentNodeId <= 0)
+    {
+        model.RootContentNodeId = Model.Content.AncestorOrSelf(1).Id;
+    }
+
+    // If searching on umbracoFile, also search on umbracoFileName
+    if (model.SearchFields.Contains("umbracoFile") && !model.SearchFields.Contains("umbracoFileName"))
+    {
+        model.SearchFields.Add("umbracoFileName");
+    }
+    
+    // Check the search term isn't empty
+    if(!string.IsNullOrWhiteSpace(model.SearchTerm))
+    {
+        // Tokenize the search term
+        model.SearchTerms = Tokenize(model.SearchTerm);
+        
+        // Perform the search
+        var searcher = ExamineManager.Instance.SearchProviderCollection["ExternalSearcher"];
+        var criteria = searcher.CreateSearchCriteria();
+        var query = new StringBuilder();
+        query.AppendFormat("-{0}:1 ", model.HideFromSearchField);
+        
+        // Set search path
+        var contentPathFilter = model.RootContentNodeId > 0
+            ? string.Format("__IndexType:{0} +searchPath:{1} -template:0", UmbracoExamine.IndexTypes.Content, model.RootContentNodeId)
+            : string.Format("__IndexType:{0} -template:0", UmbracoExamine.IndexTypes.Content);
+
+        var mediaPathFilter = model.RootMediaNodeId > 0
+            ? string.Format("__IndexType:{0} +searchPath:{1}", UmbracoExamine.IndexTypes.Media, model.RootMediaNodeId)
+            : string.Format("__IndexType:{0}", UmbracoExamine.IndexTypes.Media);
+
+        switch (model.IndexType)
+        {
+            case UmbracoExamine.IndexTypes.Content:
+                query.AppendFormat("+({0}) ", contentPathFilter);
+                break;
+            case UmbracoExamine.IndexTypes.Media:
+                query.AppendFormat("+({0}) ", mediaPathFilter);
+                break;
+            default:
+                query.AppendFormat("+(({0}) ({1})) ", contentPathFilter, mediaPathFilter);
+                break;
+        }
+        
+        // Ensure page contains all search terms in some way
+        foreach (var term in model.SearchTerms)
+        {
+            var groupedOr = new StringBuilder();
+            foreach (var searchField in model.SearchFields)
+            {
+                groupedOr.AppendFormat("{0}:{1}* ", searchField, term);
+            }
+            query.Append("+(" + groupedOr.ToString() + ") ");
+        }
+
+        // Rank content based on positon of search terms in fields
+        for (var i = 0; i < model.SearchFields.Count; i++)
+        {
+            foreach (var term in model.SearchTerms)
+            {
+                query.AppendFormat("{0}:{1}*^{2} ", model.SearchFields[i], term, model.SearchFields.Count - i);
+            }
+        }
+
+        var criteria2 = criteria.RawQuery(query.ToString());
+        
+        var results = searcher.Search(criteria2)
+           .Where(x => (
+                !Umbraco.IsProtected(int.Parse(x.Fields["id"]), x.Fields["path"]) ||
+                (
+                    Umbraco.IsProtected(int.Parse(x.Fields["id"]), x.Fields["path"]) &&
+                    Umbraco.MemberHasAccess(int.Parse(x.Fields["id"]), x.Fields["path"])
+                )) && (
+                    (x.Fields["__IndexType"] == UmbracoExamine.IndexTypes.Content && Umbraco.TypedContent(int.Parse(x.Fields["id"])) != null) ||
+                    (x.Fields["__IndexType"] == UmbracoExamine.IndexTypes.Media && Umbraco.TypedMedia(int.Parse(x.Fields["id"])) != null)
+                ))
+            .ToList();
+
+        model.AllResults = results;
+
+        model.TotalResults = results.Count;
+        model.TotalPages = (int)Math.Ceiling((decimal)model.TotalResults / model.PageSize);
+        model.CurrentPage = Math.Max(1, Math.Min(model.TotalPages, model.CurrentPage));
+        
+        // Page the results
+        model.PagedResults = model.AllResults.Skip(model.PageSize * (model.CurrentPage - 1)).Take(model.PageSize);
+
+        LogHelper.Debug<string>("[ezSearch] Searching Lucene with the following query: " + query.ToString());
+        
+        if (!model.PagedResults.Any())
+        {
+            // No results found, so render no results view
+            if(model.SearchFormLocation != "none")
+            {
+                @RenderForm(model)
+            }
+            @RenderNoResults(model)
+        }
+        else
+        {
+            // Render out the results
+            if (model.SearchFormLocation == "top" || model.SearchFormLocation == "both")
+            {
+                @RenderForm(model)
+            }
+            @RenderSummary(model)
+            @RenderResultsRange(model)
+            @RenderResults(model)
+            if(model.TotalPages > 1)
+            {
+                @RenderPager(model)  
+            }
+            if (model.SearchFormLocation == "bottom" || model.SearchFormLocation == "both")
+            {
+                @RenderForm(model)
+            }
+        }   
+    }
+    else
+    {
+        // Empty search term so just render the form
+        if(model.SearchFormLocation != "none")
+        {
+            @RenderForm(model)
+        }
+    }
+}
+
+@*
+==================================================
+ Render Functions
+==================================================
+*@
+
+@helper RenderForm(SearchViewModel model)
+{
+    <form action="" method="GET" class="ezsearch-form">
+        <div class="form-group col-md-4">
+            <input type="text" class="form-control" name="q" placeholder="@(GetDictionaryValue("[ezSearch] Search", "Search"))" value="@(model.SearchTerm)" />
+            <input type="submit" value="@(GetDictionaryValue("[ezSearch] Search", "Search"))" />
+        </div>
+</form>
+}
+
+@helper RenderSummary(SearchViewModel model)
+{
+    <div class="ezsearch-summary">
+        <p>@FormatHtml(GetDictionaryValue("[ezSearch] Summary", "Your search for <strong>\"{0}\"</strong> matched <strong>{1}</strong> page(s)."), model.SearchTerm, model.TotalResults)</p>
+    </div>
+}
+
+@helper RenderResultsRange(SearchViewModel model)
+{
+    var startRecord = ((model.CurrentPage - 1)*model.PageSize) + 1;
+    var endRecord = Math.Min(model.TotalResults, (startRecord - 1) + model.PageSize);
+    
+    <div class="ezsearch-result-count">
+        <p>@FormatHtml(GetDictionaryValue("[ezSearch] Results Range", "Showing results <strong>{0}</strong> to <strong>{1}</strong>."), startRecord, endRecord)</p>
+    </div>
+}
+
+@helper RenderResults(SearchViewModel model)
+{
+    <div class="ezsearch-results">
+        @foreach (var result in model.PagedResults)
+        {
+            switch (result.Fields["__IndexType"])
+            {
+                case UmbracoExamine.IndexTypes.Content:
+                    var contentItem = Umbraco.TypedContent(result.Fields["id"]);
+                    @RenderContentResult(model, contentItem)
+                    break;
+                case UmbracoExamine.IndexTypes.Media:
+                    var mediaItem = Umbraco.TypedMedia(result.Fields["id"]);
+                    @RenderMediaResult(model, mediaItem)
+                    break;
+            }
+        }
+    </div>
+}
+
+@helper RenderContentResult(SearchViewModel model, IPublishedContent result)
+{
+    <div class="ezsearch-result">
+        <h2><a href="@result.Url">@result.Name</a></h2>
+        @foreach (var field in model.PreviewFields.Where(field => result.HasValue(field)))
+        {
+            <p>@Highlight(Truncate(Umbraco.StripHtml(result.GetPropertyValue(field).ToString()), model.PreviewLength), model.SearchTerms)</p>
+            break;
+        }
+    </div>
+}
+
+@helper RenderMediaResult(SearchViewModel model, IPublishedContent result)
+{
+    <div class="ezsearch-result">
+        <h2><a href="@(result.GetPropertyValue<string>("umbracoFile"))" class="@(result.GetPropertyValue<string>("umbracoExtension"))">@result.Name</a></h2>
+        @foreach (var field in model.PreviewFields.Where(field => result.HasValue(field)))
+        {
+            <p>@Highlight(Truncate(Umbraco.StripHtml(result.GetPropertyValue(field).ToString()), model.PreviewLength), model.SearchTerms)</p>
+            break;
+        }
+    </div>
+}
+
+@helper RenderPager(SearchViewModel model)
+{
+    <div class="ezsearch-pager">
+        <p>
+            @if (model.CurrentPage > 1) {
+                <a class="prev" href="?q=@(model.SearchTerm)&p=@(model.CurrentPage-1)">@(GetDictionaryValue("[ezSearch] Previous", "Previous"))</a>
+            } else {
+                <span class="prev">@(GetDictionaryValue("[ezSearch] Previous", "Previous"))</span>
+            }
+            
+            @for (var i = 1; i <= model.TotalPages; i++)
+            {
+                if(i == model.CurrentPage) {
+                    <span class="page">@i</span>
+                } else {
+                    <a class="page" href="?q=@(model.SearchTerm)&p=@(i)">@i</a>
+                }
+            }
+
+            @if (model.CurrentPage < model.TotalPages) {
+                <a class="next" href="?q=@(model.SearchTerm)&p=@(model.CurrentPage + 1)">@(GetDictionaryValue("[ezSearch] Next", "Next"))</a>
+            } else {
+                <span class="next">@(GetDictionaryValue("[ezSearch] Next", "Next"))</span>
+            }
+        </p>
+    </div>
+}
+
+@helper RenderNoResults(SearchViewModel model)
+{
+    <div class="ezsearch-no-results">
+        <p>@FormatHtml(GetDictionaryValue("[ezSearch] No Results", "No results found for search term <strong>{0}</strong>."), model.SearchTerm)</p>
+    </div>
+}
+
+@functions
+{
+    // ==================================================
+    //  Helper Functions
+    //==================================================
+    
+    // Cleanse the search term
+    public string CleanseSearchTerm(string input)
+    {
+        return Umbraco.StripHtml(input).ToString();
+    }
+
+    // Splits a string on space, except where enclosed in quotes
+    public IEnumerable<string> Tokenize(string input)
+    {
+        return Regex.Matches(input, @"[\""].+?[\""]|[^ ]+")
+            .Cast<Match>()
+            .Select(m => m.Value.Trim('\"'))
+            .ToList();
+    }
+
+    // Highlights all occurances of the search terms in a body of text
+    public IHtmlString Highlight(IHtmlString input, IEnumerable<string> searchTerms)
+    {
+        return Highlight(input.ToString(), searchTerms);
+    }
+    
+    // Highlights all occurances of the search terms in a body of text
+    public IHtmlString Highlight(string input, IEnumerable<string> searchTerms)
+    {
+        input = HttpUtility.HtmlDecode(input);
+        
+        foreach (var searchTerm in searchTerms)
+        {
+            input = Regex.Replace(input, Regex.Escape(searchTerm), @"<strong>$0</strong>", RegexOptions.IgnoreCase);
+        }
+        
+        return new HtmlString(input);
+    }
+    
+    // Formats a string and returns as HTML
+    public IHtmlString FormatHtml(string input, params object[] args)
+    {
+        return Html.Raw(string.Format(input, args));
+    }
+    
+    // Gets a dictionary value with a fallback
+    public string GetDictionaryValue(string key, string fallback)
+    {
+        var value = Umbraco.GetDictionaryValue(key);
+
+        return !string.IsNullOrEmpty(value)
+            ? value
+            : fallback;
+    }
+
+    // Truncates a string on word breaks
+    public string Truncate(IHtmlString input, int maxLength)
+    {
+        return Truncate(input.ToString(), maxLength);
+    }
+
+    // Truncates a string on word breaks
+    public string Truncate(string input, int maxLength)
+    {
+        var truncated = Umbraco.Truncate(input, maxLength, true).ToString();
+        if (truncated.EndsWith("&hellip;"))
+        {
+            var lastSpaceIndex = truncated.LastIndexOf(' ');
+            if(lastSpaceIndex > 0)
+            {
+                truncated = truncated.Substring(0, lastSpaceIndex) + "&hellip;";
+            }
+        }
+
+        return truncated;
+    }
+
+    // Gets a macro parameter in a safe manner with fallback
+    public string GetMacroParam(PartialViewMacroModel model, string key, string fallback)
+    {
+        return GetMacroParam(model, key, s => s, fallback);
+    }
+
+    // Gets a macro parameter in a safe manner with fallback
+    public TType GetMacroParam<TType>(PartialViewMacroModel model, string key, Func<string, TType> convert, TType fallback)
+    {
+        if(!model.MacroParameters.ContainsKey(key))
+        {
+            return fallback;
+        }
+
+        var value = model.MacroParameters[key];
+        if(value == null || value.ToString().Trim() == "")
+        {
+            return fallback;
+        }
+
+        try
+        {
+            return convert(value.ToString());
+        }
+        catch (Exception)
+        {
+            return fallback;
+        }
+    }
+    
+    // Splits a coma seperated string into a list
+    public IList<string> SplitToList(string input)
+    {
+        return input.Split(',')
+            .Select(f => f.Trim())
+            .Where(f => !string.IsNullOrEmpty(f))
+            .ToList();
+    } 
+
+    // ==================================================
+    //  Helper Classes
+    //==================================================
+    
+    public class SearchViewModel
+    {
+        // Query Parameters
+        public string SearchTerm { get; set; }
+        public IEnumerable<string> SearchTerms { get; set; }
+        public int CurrentPage { get; set; }
+
+        // Options
+        public int RootContentNodeId { get; set; }
+        public int RootMediaNodeId { get; set; }
+        public string IndexType { get; set; }
+        public IList<string> SearchFields { get; set; }
+        public IList<string> PreviewFields { get; set; }
+        public int PreviewLength { get; set; }
+        public int PageSize { get; set; }
+        public string HideFromSearchField { get; set; }
+        public string SearchFormLocation { get; set; }
+
+        // Results
+        public int TotalResults { get; set; }
+        public int TotalPages { get; set; }
+
+        public IEnumerable<SearchResult> AllResults { get; set; }
+        public IEnumerable<SearchResult> PagedResults { get; set; }
+    }
+}

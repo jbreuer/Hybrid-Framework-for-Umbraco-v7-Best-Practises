@@ -1,0 +1,9 @@
+﻿<div>
+    <div class="sc-first-row"><label class="control-label">{{model.value.priority.caption}}<small ng-bind-html-unsafe="model.value.priority.description"></small></label>
+        <select ng-model="model.value.priority.selectedValue" ng-options="c.value as c.name for c in model.value.priority.values"></select>
+    </div>
+    <div class="sc-row">
+        <label class="control-label">{{model.value.changeFrequency.caption}}<small ng-bind-html-unsafe="model.value.changeFrequency.Description"></small></label>
+        <select ng-model="model.value.changeFrequency.selectedValue" ng-options="c.value as c.name for c in model.value.changeFrequency.values"></select>
+    </div>
+</div>

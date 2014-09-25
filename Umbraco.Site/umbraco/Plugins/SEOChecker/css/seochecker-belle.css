@@ -1,0 +1,200 @@
+﻿/*V7*/
+
+.seoCheckerDialogIitle {
+    clear: both;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    margin: 0 0 20px 0;
+    background: none repeat scroll 0 0 #F8F8F8;
+    border: 1px solid #D9D9D9;
+}
+
+.seoCheckerDialogButtons {
+    margin-top:20px;
+}
+
+.seoCheckerMain {
+    margin: 0;
+    padding: 0;
+    font-size: 14px !important;
+    font-family: "Open Sans","Helvetica Neue",Helvetica,Arial,sans-serif !important;
+    color: #343434;
+}
+
+
+.RobotsTextBox {
+    min-width:600px;
+    min-height: 400px;
+}
+
+.seoValidationItem {
+    height: 40px;
+    margin-top: 2px;
+}
+
+.seoValidationItemAlt {
+    background-color: #EEEEEE;
+}
+
+.seoItemHeader {
+    font-weight: bold;
+    float: left;
+    width:25%;
+}
+    .seoItemHeader small {
+        font-weight: normal;
+        color:#808080;
+        margin-bottom: 10px;
+    }
+.seoItemContent {
+    float: left;
+    width: 60%;
+    margin-left:10px;
+}
+
+div.overviewCategory {
+    clear: both;
+    height: 40px;
+    background: none repeat scroll 0 0 #F8F8F8;
+    margin-top: 20px;
+    border-top: 1px solid #D9D9D9;
+    border-bottom: 1px solid #D9D9D9;
+
+}
+
+
+h3.resourceHeader , h4.resourceHeader{
+    margin-left: 20px;
+}
+
+
+/*Top menu*/
+.seoCheckerOverviewMenu {
+    clear: both;
+    width:98%;
+    margin-left:20px;
+    position: absolute;
+    top:70px;
+      font-size: 12px;
+   line-height: 12px;
+}
+
+.seoimageButtonRightSpacing {
+    float: right;
+}
+
+.seoCheckerOverviewMenuFilter {
+    float: left;
+}
+.seoCheckerOverviewMenuActions {
+ float:right;  
+ margin-right: 5px; 
+}
+.seoCheckerOverviewMenuFilter .menuAction {
+    display: block;
+    float:left;
+}
+
+.menuAction label{
+    float:right;
+    font-size: 12px;
+    margin: 0 5px 0 5px;
+}
+
+select.menuAction, select.bulkActionDropdown {
+    font-size: 12px;
+   line-height: 12px;
+    height: 20px;
+    padding: 0;
+    margin: 0 3px 0 3px;
+}
+
+.menuAction input[type='checkbox'] {
+    margin-top: 4px;
+}
+
+.bulkActionbuttonBelle {
+    margin-top: 2px;
+    margin-left: 2px;
+    width: 16px;
+    height: 16px;
+}
+.seoOverviewTable input[type='checkbox'] {
+    margin-left: 10px;
+    margin-top: 2px;
+    margin-bottom: 2px;
+}
+
+.seoOverviewTable{
+
+    width: 97.5%;
+    border:1px solid #d4d4d8;
+       margin-top: 10px;
+    margin-left: 20px;
+}
+
+.seoOverviewTable th  
+{	min-width: 10px;
+    height: 30px;
+	padding:2px 5px; 
+    background: #EEEEEE;
+    border:1px solid #d4d4d8;
+}
+.seoOverviewTable th a { color: #000000; text-decoration:none; padding-right:15px;}
+.seoOverviewTable td {border:1px solid #d4d4d8;}
+
+
+.seoOverviewRow {  }
+.seoOverviewRowAlt { background-color:#EEEEEE }
+
+/*paging*/
+
+.pagingPanel {
+      font-size: 12px;
+      color: #343434;
+   line-height: 13px;
+     width: 97.5%;
+     margin-left: 20px;
+     background-color:#EEEEEE;
+     border-left: 1px solid #d4d4d8;
+     border-right: 1px solid #d4d4d8;
+     border-bottom: 1px solid #d4d4d8;
+     height: 35px;
+}
+
+.pagingLeft {
+    float: left;
+    margin: 10px 0 0 5px;
+}
+
+.pagingRight {
+    float: right;
+    margin: 10px 5px 0 0;
+}
+
+.pagingListBox {
+    width: 50px;
+  font-size: 12px;
+   line-height: 10px;
+    height: 20px;
+    padding: 0;
+    margin: 0 5px 0 5px;
+}
+
+.pagingLabel {
+    line-height: 16px;
+}
+
+.pagingBackButton {
+    margin-right: 5px;
+    font-weight: 900;
+}
+
+.pagingNextButton {
+    margin-left: 5px;
+    font-weight: 900;
+}
+.pagingBackButton:disabled, .pagingNextButton:disabled {
+    cursor:default;
+}

@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Umbraco.Site", "Umbraco.Site\Umbraco.Site.csproj", "{13ECED9E-F3BB-4166-952D-48EE4668C37E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Umbraco.Extensions", "Umbraco.Extensions\Umbraco.Extensions.csproj", "{12BF16C6-E7CF-4C46-825C-2C631A3C3941}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{13ECED9E-F3BB-4166-952D-48EE4668C37E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{13ECED9E-F3BB-4166-952D-48EE4668C37E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{13ECED9E-F3BB-4166-952D-48EE4668C37E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{13ECED9E-F3BB-4166-952D-48EE4668C37E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{12BF16C6-E7CF-4C46-825C-2C631A3C3941}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{12BF16C6-E7CF-4C46-825C-2C631A3C3941}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{12BF16C6-E7CF-4C46-825C-2C631A3C3941}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{12BF16C6-E7CF-4C46-825C-2C631A3C3941}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

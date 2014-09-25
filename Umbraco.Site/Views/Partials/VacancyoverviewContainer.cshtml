@@ -1,0 +1,62 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage<VacancyoverviewContainer>
+
+<section class="vacancy">
+    @*Vacancy items overview*@
+    @foreach (var v in Model.VacancyItems)
+    {
+        <article class="vacancyitem">
+            <ul>
+                <li>
+                    <a href="@v.Url">
+                        @v.Title<br />
+                        @v.VacancyLevel<br />
+                    </a>
+                </li>
+            </ul>
+        </article>
+    }
+</section>
+
+@*Pager*@
+@if (Model.Pager.Pages.Count() > 1)
+{
+    <div class="pagination">
+
+        <ul>
+            @if (Model.Pager.IsFirstPage)
+            {
+                <li><a class="disabled">&lt;</a></li>
+            }
+            else
+            {
+                <li><a href="@Umbraco.AppendOrUpdateQueryString("page", (Model.Pager.CurrentPage - 1).ToString())">&lt;</a></li>
+            }
+
+            @foreach (var number in Model.Pager.Pages)
+            {
+                var distanceFromCurrent = number - Model.Pager.CurrentPage;
+
+                if (number == Model.Pager.CurrentPage)
+                {
+                    <li><a class="active">@number</a></li>
+                }
+
+                else if ((distanceFromCurrent > -10) && (distanceFromCurrent < 10))
+                {
+                    <li><a href="@Umbraco.AppendOrUpdateQueryString("page", number.ToString())">@number</a></li>
+                }
+            }
+
+            @if (Model.Pager.IsLastPage)
+            {
+                <li><a class="disabled">&gt;</a></li>
+            }
+            else
+            {
+                <li><a href="@Umbraco.AppendOrUpdateQueryString("page", (Model.Pager.CurrentPage + 1).ToString())">&gt;</a></li>
+            }
+
+        </ul>
+
+    </div>
+}

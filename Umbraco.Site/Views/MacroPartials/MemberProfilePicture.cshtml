@@ -1,0 +1,31 @@
+﻿@inherits Umbraco.Web.Macros.PartialViewMacroPage
+@{
+    var services = ApplicationContext.Current.Services;
+    var members = (IEnumerable<IMember>)HttpContext.Current.Items["MemberPicker"];
+    
+    if(members == null)
+    {
+        //Get all the members and store them for this request. This macro will be called multiple times.
+        var keys = Model.MacroParameters["keys"].ToString().Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries).Select(x => Convert.ToInt32(x)).ToArray();
+        members = services.MemberService.GetAllMembers(keys).ToList();
+        HttpContext.Current.Items["MemberPicker"] = members;
+    }
+
+    var member = members.Where(x => x.Id == Convert.ToInt32(Model.MacroParameters["key"])).FirstOrDefault();
+    
+    if (member != null)
+    {
+        var mediaId = member.GetValue<int?>("profilePicture");
+        if(mediaId.HasValue)
+        {
+            var media = services.MediaService.GetById(mediaId.Value);
+            var json = media.GetValue<string>("umbracoFile");
+            if(!string.IsNullOrWhiteSpace(json))
+            {
+                var cropper = JsonConvert.DeserializeObject<ImageCropDataSet>(json);
+                <img src="@cropper.GetCropUrl(width: 100, height: 100)" />    
+            }
+        }
+        <span>@member.Name</span>
+    }
+}

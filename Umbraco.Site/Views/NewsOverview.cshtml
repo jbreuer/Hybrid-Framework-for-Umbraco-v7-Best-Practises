@@ -1,0 +1,79 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage<MasterModel<Newsoverview>>
+@{
+    Layout = "Master.cshtml";
+}
+
+<h1>@Model.Content.Title</h1>
+@Model.Content.Text
+
+<section class="news">
+
+    @*News items overview*@
+    @foreach (var n in Model.Content.NewsItems)
+    {
+        <article class="newsitem">
+            <ul>
+                <li>
+                    <a href="@n.Url">
+                        @n.Title<br />
+                        @n.CurrentDate.ToString("D")<br />
+                    </a>
+                </li>
+            </ul>
+        </article>
+    }
+
+</section>
+
+@*Pager*@
+@if (Model.Content.Pager.Pages.Count() > 1) 
+{
+    <div class="pagination">	
+
+	    <ul>
+            @if (Model.Content.Pager.IsFirstPage)
+            {
+                <li><a class="disabled">&lt;</a></li>
+            }
+            else
+            {
+                <li><a href="@Umbraco.AppendOrUpdateQueryString("page", (Model.Content.Pager.CurrentPage - 1).ToString())">&lt;</a></li>
+            }
+
+            @foreach (var number in Model.Content.Pager.Pages)
+            {
+                var distanceFromCurrent = number - Model.Content.Pager.CurrentPage;
+
+                if (number == Model.Content.Pager.CurrentPage)
+                {
+                    <li><a class="active">@number</a></li>
+                }
+
+                else if ((distanceFromCurrent > -10) && (distanceFromCurrent < 10))
+                {
+                    <li><a href="@Umbraco.AppendOrUpdateQueryString("page", number.ToString())">@number</a></li>
+                }
+            }
+
+            @if (Model.Content.Pager.IsLastPage)
+            {
+	            <li><a class="disabled">&gt;</a></li>
+            }
+            else
+            {
+                <li><a href="@Umbraco.AppendOrUpdateQueryString("page", (Model.Content.Pager.CurrentPage + 1).ToString())">&gt;</a></li>
+            }
+
+	    </ul>
+
+    </div>
+}
+
+@*This date doesn't get updated after a refresh because of the donut caching.*@
+@DateTime.Now.ToString("F")
+
+@*An example that the rest of the page can be cached, but this partial view isn't.*@
+@Html.Action("ShowDates", "Newsoverview", true)
+
+@*Render the widgets.*@
+@Html.Partial("Widgets", Model.Content.Widgets)

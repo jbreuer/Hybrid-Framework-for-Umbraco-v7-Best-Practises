@@ -1,0 +1,39 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage<IEnumerable<IPublishedContent>>
+
+@foreach (var c in Model)
+{
+    @RenderContent((dynamic) c)
+}
+
+@*News widget*@
+@helper RenderContent(WidgetNews widgetNews)
+{
+    var latestNewsItem = NewsLogic.GetLatestNewsitem();
+    <section>
+        <h3>@widgetNews.Title</h3>
+        <p>
+            <a href="@latestNewsItem.Url">
+                @latestNewsItem.Title<br />
+                @latestNewsItem.CurrentDate.ToString("D")<br />
+            </a>
+        </p>
+    </section>
+}
+
+@*Text widget*@
+@helper RenderContent(WidgetText widgetText)
+{
+    <section>
+        <h3>@widgetText.Title</h3>
+        @widgetText.Text
+    </section>
+}
+
+@*Image widget*@
+@helper RenderContent(WidgetImage widgetImage)
+{
+    <section style="max-width: 140px;">
+        <h3>@widgetImage.Title</h3>
+        <img src="@widgetImage.Image.Cropper.GetResponsiveCropUrl(50, 40)" alt="@widgetImage.Image.Name" />
+    </section>
+}
