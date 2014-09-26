@@ -8,4 +8,6 @@ Username: admin
 
 Password: framework123!
 
-More documentation will be added soon.
+This video explains all the new features of the Hybrid Framework for Umbraco v7 and how to use them: https://www.youtube.com/watch?v=Enni9r0whCE
+
+There isn't any other documentation yet, but in the code there are a lot of comments which can help.
