@@ -52,7 +52,8 @@ namespace Umbraco.Extensions.BLL
                     Id = n.Id,
                     Title = n.MenuTitle,
                     Url = n.Url,
-                    ActiveClass = CurrentPage.Path.Contains(n.Id.ToString()) ? "active" : null
+                    ActiveClass = CurrentPage.Path.Contains(n.Id.ToString()) ? "active" : null,
+                    MenuIcon = n.MenuIcon
                 }
             ).ToList();
         }

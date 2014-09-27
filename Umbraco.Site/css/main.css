@@ -766,7 +766,9 @@ footer {
         #vacancies a:hover i {
             right: 17px;
         }
-            
 
+.menu-icon {
+    padding-left: 18px;
+}
 
 /* EDITOR PROPERTIES - PLEASE DON'T DELETE THIS LINE TO AVOID DUPLICATE PROPERTIES */
