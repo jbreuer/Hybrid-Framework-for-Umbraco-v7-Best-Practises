@@ -492,6 +492,15 @@ body {
     transition: all .3s ease;
     z-index: 99999;
 }
+
+.menu-icon {
+    padding-left: 18px;
+}
+
+.active .menu-icon {
+    color: #009bc8;
+}
+
 #wrapper.toggled #sidebar-wrapper {
     width: 250px;
 }
@@ -766,7 +775,7 @@ footer {
         #vacancies a:hover i {
             right: 17px;
         }
-            
+
 
 
 /* EDITOR PROPERTIES - PLEASE DON'T DELETE THIS LINE TO AVOID DUPLICATE PROPERTIES */

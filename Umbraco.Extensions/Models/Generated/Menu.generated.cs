@@ -53,6 +53,13 @@ namespace Umbraco.Extensions.Models.Generated
 			get { return this.GetPropertyValue<bool>("hideInMenu"); }
 		}
 
+		/// <summary>Menu Icon</summary>
+		[ImplementPropertyType("menuIcon")]
+		public string MenuIcon
+		{
+			get { return this.GetPropertyValue<string>("menuIcon"); }
+		}
+
 		/// <summary>Menu title</summary>
 		[ImplementPropertyType("menuTitle")]
 		public string MenuTitle

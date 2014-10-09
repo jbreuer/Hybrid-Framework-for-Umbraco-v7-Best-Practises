@@ -11,7 +11,7 @@
     <meta name="description" content="@Model.SeoDescription">
 
     @*If this is bundled and minified the fonts don't work.*@
-    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
 
     @*Add bootstrapcss as a token from the web.config. This is an external source.*@
     @*Add main.css because the /css folder is scanned for that name.*@
@@ -31,10 +31,19 @@
             <ul>
                 @foreach (var m in Model.MenuItems)
                 {
-                    <li class="@m.ActiveClass"><a href="@m.Url">@m.Title</a></li>
+                    string icontype = "fa-circle-o";
+                    
+                    if (!m.MenuIcon.IsNullOrWhiteSpace())
+                    {
+                        icontype = m.MenuIcon;
+                    }
+                  
+                    <li class="@m.ActiveClass"><i class="fa @icontype menu-icon"></i><a href="@m.Url">@m.Title</a></li>
                 }
             </ul>
         </nav>
+
+       
 
         <div id="page-content-wrapper">
             <div class="container-fluid">
