@@ -32,12 +32,14 @@ namespace Umbraco.Extensions.BLL
             string configAlias = null
             )
         {
+            var typeValue = type.ToString();
+
             var sql = new Sql();
             sql.Select("COUNT(*)")
                 .From<ContentOverrideDto>()
                 .Where<ContentOverrideDto>(x => x.ContentTypeAlias == contentTypeAlias)
                 .Where<ContentOverrideDto>(x => x.PropertyTypeAlias == propertyTypeAlias)
-                .Where<ContentOverrideDto>(x => x.Type == type.ToString());
+                .Where<ContentOverrideDto>(x => x.Type == typeValue);
 
             if (!string.IsNullOrWhiteSpace(archetypeAlias))
             {
@@ -74,12 +76,14 @@ namespace Umbraco.Extensions.BLL
             string configAlias = null
             )
         {
+            var typeValue = type.ToString();
+
             var sql = new Sql();
             sql.Select("*")
                 .From<ContentOverrideDto>()
                 .Where<ContentOverrideDto>(x => x.ContentTypeAlias == contentTypeAlias)
                 .Where<ContentOverrideDto>(x => x.PropertyTypeAlias == propertyTypeAlias)
-                .Where<ContentOverrideDto>(x => x.Type == type.ToString());
+                .Where<ContentOverrideDto>(x => x.Type == typeValue);
 
             if (!string.IsNullOrWhiteSpace(archetypeAlias))
             {
@@ -112,11 +116,13 @@ namespace Umbraco.Extensions.BLL
             string configAlias = null
             )
         {
+            var typeValue = type.ToString();
+
             var sql = new Sql();
             sql.Select("*")
                 .From<ContentOverrideDto>()
                 .Where<ContentOverrideDto>(x => x.ContentTypeAlias == contentTypeAlias)
-                .Where<ContentOverrideDto>(x => x.Type == type.ToString());
+                .Where<ContentOverrideDto>(x => x.Type == typeValue);
 
             if (type == ContentOverrideType.Config && !string.IsNullOrWhiteSpace(configAlias))
             {
