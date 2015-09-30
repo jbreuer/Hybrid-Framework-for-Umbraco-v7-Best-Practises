@@ -15,7 +15,11 @@ namespace Umbraco.Extensions.UrlProvider
             var content = umbracoContext.ContentCache.GetById(id);
             if (content != null && content.DocumentTypeAlias == "Home" && content.Parent != null)
             {
-                //The home node will have / instead of /home/.
+                if (UrlProviderMode.Absolute == mode)
+                {
+                    return current.GetLeftPart(UriPartial.Authority) + content.Parent.Url;
+                }
+
                 return content.Parent.Url;
             }
 
